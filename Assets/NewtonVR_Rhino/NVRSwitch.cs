@@ -26,7 +26,7 @@ namespace NewtonVR_Rhino
 
         private void FixedUpdate()
         {
-            float angle = this.transform.localEulerAngles.z;
+            var angle = this.transform.localEulerAngles.z;
             if (angle > 180)
                 angle -= 360;
 

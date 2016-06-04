@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace NewtonVR_Rhino
@@ -16,7 +15,7 @@ namespace NewtonVR_Rhino
         [HideInInspector]
         public NVRHand[] Hands;
 
-        private Dictionary<Collider, NVRHand> ColliderToHandMapping;
+        private Dictionary<Collider, NVRHand> _colliderToHandMapping;
 
         private void Awake()
         {
@@ -25,7 +24,7 @@ namespace NewtonVR_Rhino
 
             if (Head == null)
             {
-                Head = this.GetComponentInChildren<NVRHead>();
+                Head = GetComponentInChildren<NVRHead>();
             }
 
             if (LeftHand == null || RightHand == null)
@@ -35,35 +34,35 @@ namespace NewtonVR_Rhino
 
             if (Hands == null || Hands.Length == 0)
             {
-                Hands = new NVRHand[] { LeftHand, RightHand };
+                Hands = new[] { LeftHand, RightHand };
             }
 
-            ColliderToHandMapping = new Dictionary<Collider, NVRHand>();
+            _colliderToHandMapping = new Dictionary<Collider, NVRHand>();
         }
 
         public void RegisterHand(NVRHand hand)
         {
-            Collider[] colliders = hand.GetComponentsInChildren<Collider>();
+            var colliders = hand.GetComponentsInChildren<Collider>();
 
-            for (int index = 0; index < colliders.Length; index++)
+            foreach (Collider coll in colliders)
             {
-                if (ColliderToHandMapping.ContainsKey(colliders[index]) == false)
+                if (_colliderToHandMapping.ContainsKey(coll) == false)
                 {
-                    ColliderToHandMapping.Add(colliders[index], hand);
+                    _colliderToHandMapping.Add(coll, hand);
                 }
             }
         }
 
         public NVRHand GetHand(Collider collider)
         {
-            return ColliderToHandMapping[collider];
+            return _colliderToHandMapping[collider];
         }
 
         public static void DeregisterInteractable(NVRInteractable interactable)
         {
-            for (int index = 0; index < Instance.Hands.Length; index++)
+            foreach (var hand in Instance.Hands)
             {
-                Instance.Hands[index].DeregisterInteractable(interactable);
+                hand.DeregisterInteractable(interactable);
             }
         }
     }

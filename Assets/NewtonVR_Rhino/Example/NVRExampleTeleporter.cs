@@ -43,7 +43,7 @@ namespace NewtonVR_Rhino.Example
                 Line.SetWidth(LineWidth, LineWidth);
 
                 RaycastHit hitInfo;
-                bool hit = Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 1000);
+                var hit = Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 1000);
                 Vector3 endPoint;
 
                 if (hit == true)
@@ -52,11 +52,11 @@ namespace NewtonVR_Rhino.Example
 
                     if (Hand.Inputs[Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger].PressDown == true)
                     {
-                        NVRInteractable LHandInteractable = NVRPlayer.Instance.LeftHand.CurrentlyInteracting;
-                        NVRInteractable RHandInteractable = NVRPlayer.Instance.RightHand.CurrentlyInteracting;
+                        var LHandInteractable = NVRPlayer.Instance.LeftHand.CurrentlyInteracting;
+                        var RHandInteractable = NVRPlayer.Instance.RightHand.CurrentlyInteracting;
 
 
-                        Vector3 offset = NVRPlayer.Instance.Head.transform.position - NVRPlayer.Instance.transform.position;
+                        var offset = NVRPlayer.Instance.Head.transform.position - NVRPlayer.Instance.transform.position;
                         offset.y = 0;
 
                         NVRPlayer.Instance.transform.position = hitInfo.point - offset;

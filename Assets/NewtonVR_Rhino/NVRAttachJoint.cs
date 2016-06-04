@@ -20,10 +20,10 @@ namespace NewtonVR_Rhino
         {
             if (IsAttached == false)
             {
-                NVRAttachPoint point = AttachPointMapper.GetAttachPoint(col);
+                var point = AttachPointMapper.GetAttachPoint(col);
                 if (point != null && point.IsAttached == false)
                 {
-                    float distance = Vector3.Distance(point.transform.position, this.transform.position);
+                    var distance = Vector3.Distance(point.transform.position, this.transform.position);
 
                     if (distance < AttachRange)
                     {
@@ -47,7 +47,7 @@ namespace NewtonVR_Rhino
 
         protected virtual void FixedUpdateAttached()
         {
-            float distance = Vector3.Distance(AttachedPoint.transform.position, this.transform.position);
+            var distance = Vector3.Distance(AttachedPoint.transform.position, this.transform.position);
 
             if (distance > DropDistance)
             {

@@ -15,7 +15,7 @@ namespace NewtonVR_Rhino.Example
         {
             base.UseButtonDown();
 
-            GameObject bullet = GameObject.Instantiate(BulletPrefab);
+            var bullet = GameObject.Instantiate(BulletPrefab);
             bullet.transform.position = FirePoint.position;
             bullet.transform.forward = FirePoint.forward;
 

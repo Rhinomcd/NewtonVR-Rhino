@@ -27,7 +27,7 @@ namespace NewtonVR_Rhino
             PhysicalController = GameObject.Instantiate(Hand.gameObject);
             PhysicalController.name = PhysicalController.name.Replace("(Clone)", " [Physical]");
 
-            SteamVR_RenderModel renderModel = PhysicalController.GetComponentInChildren<SteamVR_RenderModel>();
+            var renderModel = PhysicalController.GetComponentInChildren<SteamVR_RenderModel>();
             ModelParent = renderModel.transform;
 
             GameObject.DestroyImmediate(PhysicalController.GetComponent<NVRPhysicalController>());
@@ -36,8 +36,8 @@ namespace NewtonVR_Rhino
             GameObject.DestroyImmediate(renderModel);
             GameObject.DestroyImmediate(PhysicalController.GetComponent<NVRPhysicalController>());
 
-            Collider[] clonedColliders = PhysicalController.GetComponentsInChildren<Collider>();
-            for (int index = 0; index < clonedColliders.Length; index++)
+            var clonedColliders = PhysicalController.GetComponentsInChildren<Collider>();
+            for (var index = 0; index < clonedColliders.Length; index++)
             {
                 GameObject.DestroyImmediate(clonedColliders[index]);
             }
@@ -53,16 +53,16 @@ namespace NewtonVR_Rhino
             Rigidbody.angularDrag = 0;
             Rigidbody.maxAngularVelocity = 100f;
 
-            string controllerModel = Hand.GetDeviceName();
+            var controllerModel = Hand.GetDeviceName();
             switch (controllerModel)
             {
                 case "vr_controller_05_wireless_b":
-                    Transform dk1Trackhat = ModelParent.transform.Find("trackhat");
+                    var dk1Trackhat = ModelParent.transform.Find("trackhat");
                     Collider dk1TrackhatCollider = dk1Trackhat.gameObject.GetComponent<BoxCollider>();
                     if (dk1TrackhatCollider == null)
                         dk1TrackhatCollider = dk1Trackhat.gameObject.AddComponent<BoxCollider>();
 
-                    Transform dk1Body = ModelParent.transform.Find("body");
+                    var dk1Body = ModelParent.transform.Find("body");
                     Collider dk1BodyCollider = dk1Body.gameObject.GetComponent<BoxCollider>();
                     if (dk1BodyCollider == null)
                         dk1BodyCollider = dk1Body.gameObject.AddComponent<BoxCollider>();
@@ -71,7 +71,7 @@ namespace NewtonVR_Rhino
                     break;
 
                 case "vr_controller_vive_1_5":
-                    Transform dk2TrackhatColliders = ModelParent.transform.FindChild("VivePreColliders");
+                    var dk2TrackhatColliders = ModelParent.transform.FindChild("VivePreColliders");
                     if (dk2TrackhatColliders == null)
                     {
                         dk2TrackhatColliders = GameObject.Instantiate(Resources.Load<GameObject>("VivePreColliders")).transform;
@@ -85,10 +85,10 @@ namespace NewtonVR_Rhino
                     break;
 
                 case "Custom":
-                    Transform customCollidersTransform = PhysicalController.transform.FindChild("VivePreColliders");
+                    var customCollidersTransform = PhysicalController.transform.FindChild("VivePreColliders");
                     if (customCollidersTransform == null)
                     {
-                        GameObject customColliders = GameObject.Instantiate(Hand.CustomPhysicalColliders);
+                        var customColliders = GameObject.Instantiate(Hand.CustomPhysicalColliders);
                         customColliders.name = "CustomColliders";
                         customCollidersTransform = customColliders.transform;
 
@@ -106,8 +106,8 @@ namespace NewtonVR_Rhino
                     break;
             }
 
-            Renderer[] renderers = PhysicalController.GetComponentsInChildren<Renderer>();
-            for (int index = 0; index < renderers.Length; index++)
+            var renderers = PhysicalController.GetComponentsInChildren<Renderer>();
+            for (var index = 0; index < renderers.Length; index++)
             {
                 NVRHelpers.SetOpaque(renderers[index].material);
             }
@@ -130,7 +130,7 @@ namespace NewtonVR_Rhino
 
         private void CheckForDrop()
         {
-            float distance = Vector3.Distance(Hand.transform.position, this.transform.position);
+            var distance = Vector3.Distance(Hand.transform.position, this.transform.position);
 
             if (distance > DropDistance)
             {
@@ -156,12 +156,12 @@ namespace NewtonVR_Rhino
 
             if (angle != 0)
             {
-                Vector3 AngularTarget = angle * axis * AttachedRotationMagic;
+                var AngularTarget = angle * axis * AttachedRotationMagic;
                 AngularTarget = AngularTarget * Time.fixedDeltaTime;
                 this.Rigidbody.angularVelocity = Vector3.MoveTowards(this.Rigidbody.angularVelocity, AngularTarget, 10f);
             }
 
-            Vector3 VelocityTarget = PositionDelta * AttachedPositionMagic * Time.fixedDeltaTime;
+            var VelocityTarget = PositionDelta * AttachedPositionMagic * Time.fixedDeltaTime;
 
             this.Rigidbody.velocity = Vector3.MoveTowards(this.Rigidbody.velocity, VelocityTarget, 10f);
         }

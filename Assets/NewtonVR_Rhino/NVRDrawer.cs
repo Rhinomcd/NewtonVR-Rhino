@@ -22,7 +22,7 @@ namespace NewtonVR_Rhino
 
             if (IsAttached == true)
             {
-                Vector3 PositionDelta = (AttachedHand.transform.position - InitialAttachPoint.position) * DeltaMagic;
+                var PositionDelta = (AttachedHand.transform.position - InitialAttachPoint.position) * DeltaMagic;
 
                 this.Rigidbody.AddForceAtPosition(PositionDelta, InitialAttachPoint.position, ForceMode.VelocityChange);
             }
@@ -34,12 +34,12 @@ namespace NewtonVR_Rhino
         {
             base.BeginInteraction(hand);
 
-            Vector3 closestPoint = Vector3.zero;
-            float shortestDistance = float.MaxValue;
-            for (int index = 0; index < Colliders.Length; index++)
+            var closestPoint = Vector3.zero;
+            var shortestDistance = float.MaxValue;
+            for (var index = 0; index < Colliders.Length; index++)
             {
-                Vector3 closest = Colliders[index].bounds.ClosestPoint(AttachedHand.transform.position);
-                float distance = Vector3.Distance(AttachedHand.transform.position, closest);
+                var closest = Colliders[index].bounds.ClosestPoint(AttachedHand.transform.position);
+                var distance = Vector3.Distance(AttachedHand.transform.position, closest);
 
                 if (distance < shortestDistance)
                 {

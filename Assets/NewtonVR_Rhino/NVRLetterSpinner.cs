@@ -26,14 +26,14 @@ namespace NewtonVR_Rhino
 
             if (IsAttached == false)
             {
-                float wheelAngle = this.transform.localEulerAngles.z;
+                var wheelAngle = this.transform.localEulerAngles.z;
 
                 float rung = Mathf.RoundToInt(wheelAngle / RungAngleInterval);
 
-                float distanceToRung = wheelAngle - (rung * RungAngleInterval);
-                float distanceToRungAbs = Mathf.Abs(distanceToRung);
+                var distanceToRung = wheelAngle - (rung * RungAngleInterval);
+                var distanceToRungAbs = Mathf.Abs(distanceToRung);
 
-                float velocity = Mathf.Abs(this.Rigidbody.angularVelocity.z);
+                var velocity = Mathf.Abs(this.Rigidbody.angularVelocity.z);
 
                 if (velocity > 0.001f && velocity < 0.5f)
                 {
@@ -46,7 +46,7 @@ namespace NewtonVR_Rhino
                         this.Rigidbody.velocity = Vector3.zero;
                         this.Rigidbody.angularVelocity = Vector3.zero;
 
-                        Vector3 newRotation = this.transform.localEulerAngles;
+                        var newRotation = this.transform.localEulerAngles;
                         newRotation.z = rung * RungAngleInterval;
                         this.transform.localEulerAngles = newRotation;
 
@@ -67,7 +67,7 @@ namespace NewtonVR_Rhino
 
         public string GetLetter()
         {
-            int closest = Mathf.RoundToInt(this.transform.localEulerAngles.z / RungAngleInterval);
+            var closest = Mathf.RoundToInt(this.transform.localEulerAngles.z / RungAngleInterval);
             if (this.transform.localEulerAngles.z < 0.3)
                 closest = LETTERLIST.Length - closest;
 
@@ -76,7 +76,7 @@ namespace NewtonVR_Rhino
             if (closest == -1)
                 closest = 26;
 
-            string character = LETTERLIST.Substring(closest, 1);
+            var character = LETTERLIST.Substring(closest, 1);
 
             return character;
         }

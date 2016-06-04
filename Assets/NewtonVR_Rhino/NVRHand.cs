@@ -89,7 +89,7 @@ namespace NewtonVR_Rhino {
             VisibilityLocked = false;
 
             Inputs = new Dictionary<EVRButtonId, NVRButtonInputs>();
-            System.Array buttonTypes = System.Enum.GetValues(typeof(EVRButtonId));
+            var buttonTypes = System.Enum.GetValues(typeof(EVRButtonId));
             foreach (EVRButtonId buttonType in buttonTypes) {
                 if (Inputs.ContainsKey(buttonType) == false) //for some reason there is two EVRButtonId.2 entries
                 {
@@ -195,8 +195,8 @@ namespace NewtonVR_Rhino {
         }
 
         private IEnumerator DoLongHapticPulse(float seconds, EVRButtonId buttonId = EVRButtonId.k_EButton_SteamVR_Touchpad) {
-            float startTime = Time.time;
-            float endTime = startTime + seconds;
+            var startTime = Time.time;
+            var endTime = startTime + seconds;
             while (Time.time < endTime) {
                 Controller.TriggerHapticPulse(100, buttonId);
                 yield return null;
@@ -265,11 +265,11 @@ namespace NewtonVR_Rhino {
         }
 
         public Vector3 GetVelocityEstimation() {
-            float delta = LastDeltas.Sum();
-            Vector3 distance = Vector3.zero;
+            var delta = LastDeltas.Sum();
+            var distance = Vector3.zero;
 
-            for (int index = 0; index < LastPositions.Length - 1; index++) {
-                Vector3 diff = LastPositions[index + 1] - LastPositions[index];
+            for (var index = 0; index < LastPositions.Length - 1; index++) {
+                var diff = LastPositions[index + 1] - LastPositions[index];
                 distance += diff;
             }
 
@@ -277,10 +277,10 @@ namespace NewtonVR_Rhino {
         }
 
         public Vector3 GetAngularVelocityEstimation() {
-            float delta = LastDeltas.Sum();
-            float angleDegrees = 0.0f;
-            Vector3 unitAxis = Vector3.zero;
-            Quaternion rotation = Quaternion.identity;
+            var delta = LastDeltas.Sum();
+            var angleDegrees = 0.0f;
+            var unitAxis = Vector3.zero;
+            var rotation = Quaternion.identity;
 
             rotation = LastRotations[LastRotations.Length - 1] * Quaternion.Inverse(LastRotations[LastRotations.Length - 2]);
 
@@ -290,8 +290,8 @@ namespace NewtonVR_Rhino {
         }
 
         public Vector3 GetPositionDelta() {
-            int last = EstimationSampleIndex - 1;
-            int secondToLast = EstimationSampleIndex - 2;
+            var last = EstimationSampleIndex - 1;
+            var secondToLast = EstimationSampleIndex - 2;
 
             if (last < 0)
                 last += EstimationSamples;
@@ -302,8 +302,8 @@ namespace NewtonVR_Rhino {
         }
 
         public Quaternion GetRotationDelta() {
-            int last = EstimationSampleIndex - 1;
-            int secondToLast = EstimationSampleIndex - 2;
+            var last = EstimationSampleIndex - 1;
+            var secondToLast = EstimationSampleIndex - 2;
 
             if (last < 0)
                 last += EstimationSamples;
@@ -356,13 +356,13 @@ namespace NewtonVR_Rhino {
 
         private bool PickupClosest() {
             NVRInteractable closest = null;
-            float closestDistance = float.MaxValue;
+            var closestDistance = float.MaxValue;
 
             foreach (var hovering in CurrentlyHoveringOver) {
                 if (hovering.Key == null)
                     continue;
 
-                float distance = Vector3.Distance(this.transform.position, hovering.Key.transform.position);
+                var distance = Vector3.Distance(this.transform.position, hovering.Key.transform.position);
                 if (distance < closestDistance) {
                     closestDistance = distance;
                     closest = hovering.Key;
@@ -378,7 +378,7 @@ namespace NewtonVR_Rhino {
         }
 
         protected virtual void OnTriggerEnter(Collider collider) {
-            NVRInteractable interactable = NVRInteractables.GetInteractable(collider);
+            var interactable = NVRInteractables.GetInteractable(collider);
             if (interactable == null || interactable.enabled == false)
                 return;
 
@@ -390,7 +390,7 @@ namespace NewtonVR_Rhino {
         }
 
         protected virtual void OnTriggerStay(Collider collider) {
-            NVRInteractable interactable = NVRInteractables.GetInteractable(collider);
+            var interactable = NVRInteractables.GetInteractable(collider);
             if (interactable == null || interactable.enabled == false)
                 return;
 
@@ -402,7 +402,7 @@ namespace NewtonVR_Rhino {
         }
 
         protected virtual void OnTriggerExit(Collider collider) {
-            NVRInteractable interactable = NVRInteractables.GetInteractable(collider);
+            var interactable = NVRInteractables.GetInteractable(collider);
             if (interactable == null)
                 return;
 
@@ -439,11 +439,11 @@ namespace NewtonVR_Rhino {
                 if (visibility == VisibilityLevel.Ghost) {
                     PhysicalController.Off();
 
-                    for (int index = 0; index < GhostRenderers.Length; index++) {
+                    for (var index = 0; index < GhostRenderers.Length; index++) {
                         GhostRenderers[index].enabled = true;
                     }
 
-                    for (int index = 0; index < GhostColliders.Length; index++) {
+                    for (var index = 0; index < GhostColliders.Length; index++) {
                         GhostColliders[index].enabled = true;
                     }
                 }
@@ -451,11 +451,11 @@ namespace NewtonVR_Rhino {
                 if (visibility == VisibilityLevel.Visible) {
                     PhysicalController.On();
 
-                    for (int index = 0; index < GhostRenderers.Length; index++) {
+                    for (var index = 0; index < GhostRenderers.Length; index++) {
                         GhostRenderers[index].enabled = false;
                     }
 
-                    for (int index = 0; index < GhostColliders.Length; index++) {
+                    for (var index = 0; index < GhostColliders.Length; index++) {
                         GhostColliders[index].enabled = false;
                     }
                 }
@@ -466,8 +466,8 @@ namespace NewtonVR_Rhino {
 
         private void RenderModelLoaded(params object[] args) {
             //Debug.Log("RenderModelLoaded");
-            SteamVR_RenderModel renderModel = (SteamVR_RenderModel)args[0];
-            bool success = (bool)args[1];
+            var renderModel = (SteamVR_RenderModel)args[0];
+            var success = (bool)args[1];
 
             if ((int)renderModel.index == DeviceIndex)
                 RenderModelInitialized = true;
@@ -486,19 +486,19 @@ namespace NewtonVR_Rhino {
             Collider[] Colliders = null;
 
             if (CustomModel == null) {
-                string controllerModel = GetDeviceName();
-                SteamVR_RenderModel renderModel = this.GetComponentInChildren<SteamVR_RenderModel>();
+                var controllerModel = GetDeviceName();
+                var renderModel = this.GetComponentInChildren<SteamVR_RenderModel>();
 
                 switch (controllerModel) {
                     case "vr_controller_05_wireless_b":
-                        Transform dk1Trackhat = renderModel.transform.Find("trackhat");
+                        var dk1Trackhat = renderModel.transform.Find("trackhat");
                         if (dk1Trackhat == null) {
                             // Dk1 controller model has trackhat
                         } else {
                             dk1Trackhat.gameObject.SetActive(true);
                         }
 
-                        SphereCollider dk1TrackhatCollider = dk1Trackhat.gameObject.GetComponent<SphereCollider>();
+                        var dk1TrackhatCollider = dk1Trackhat.gameObject.GetComponent<SphereCollider>();
                         if (dk1TrackhatCollider == null) {
                             dk1TrackhatCollider = dk1Trackhat.gameObject.AddComponent<SphereCollider>();
                             dk1TrackhatCollider.isTrigger = true;
@@ -508,7 +508,7 @@ namespace NewtonVR_Rhino {
                         break;
 
                     case "vr_controller_vive_1_5":
-                        Transform dk2Trackhat = renderModel.transform.FindChild("trackhat");
+                        var dk2Trackhat = renderModel.transform.FindChild("trackhat");
                         if (dk2Trackhat == null) {
                             dk2Trackhat = new GameObject("trackhat").transform;
                             dk2Trackhat.gameObject.layer = this.gameObject.layer;
@@ -535,7 +535,7 @@ namespace NewtonVR_Rhino {
                         break;
                 }
             } else {
-                GameObject CustomModelObject = GameObject.Instantiate(CustomModel);
+                var CustomModelObject = GameObject.Instantiate(CustomModel);
                 Colliders = CustomModelObject.GetComponentsInChildren<Collider>(); //note: these should be trigger colliders
 
                 CustomModelObject.transform.parent = this.transform;
@@ -554,22 +554,22 @@ namespace NewtonVR_Rhino {
                 PhysicalController = this.gameObject.AddComponent<NVRPhysicalController>();
                 PhysicalController.Initialize(this, false);
 
-                Color transparentcolor = Color.white;
+                var transparentcolor = Color.white;
                 transparentcolor.a = (float)VisibilityLevel.Ghost / 100f;
 
                 GhostRenderers = this.GetComponentsInChildren<Renderer>();
-                for (int rendererIndex = 0; rendererIndex < GhostRenderers.Length; rendererIndex++) {
+                for (var rendererIndex = 0; rendererIndex < GhostRenderers.Length; rendererIndex++) {
                     NVRHelpers.SetTransparent(GhostRenderers[rendererIndex].material, transparentcolor);
                 }
 
                 GhostColliders = Colliders;
                 CurrentVisibility = VisibilityLevel.Ghost;
             } else {
-                Color transparentcolor = Color.white;
+                var transparentcolor = Color.white;
                 transparentcolor.a = (float)VisibilityLevel.Ghost / 100f;
 
                 GhostRenderers = this.GetComponentsInChildren<Renderer>();
-                for (int rendererIndex = 0; rendererIndex < GhostRenderers.Length; rendererIndex++) {
+                for (var rendererIndex = 0; rendererIndex < GhostRenderers.Length; rendererIndex++) {
                     NVRHelpers.SetTransparent(GhostRenderers[rendererIndex].material, transparentcolor);
                 }
 

@@ -52,13 +52,13 @@ namespace NewtonVR_Rhino
         {
             if (IsAttached == true)
             {
-                float shortestDistance = float.MaxValue;
+                var shortestDistance = float.MaxValue;
 
-                for (int index = 0; index < Colliders.Length; index++)
+                for (var index = 0; index < Colliders.Length; index++)
                 {
                     //todo: this does not do what I think it does.
-                    Vector3 closest = Colliders[index].ClosestPointOnBounds(AttachedHand.transform.position);
-                    float distance = Vector3.Distance(AttachedHand.transform.position, closest);
+                    var closest = Colliders[index].ClosestPointOnBounds(AttachedHand.transform.position);
+                    var distance = Vector3.Distance(AttachedHand.transform.position, closest);
 
                     if (distance < shortestDistance)
                     {

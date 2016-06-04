@@ -46,7 +46,7 @@ namespace NewtonVR_Rhino.Example
                 Line.SetWidth(LineWidth, LineWidth);
 
                 RaycastHit hitInfo;
-                bool hit = Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 1000);
+                var hit = Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 1000);
                 Vector3 endPoint;
 
                 if (hit == true)

@@ -25,7 +25,7 @@ namespace NewtonVR_Rhino
 
         public IEnumerator DoBlastOff()
         {
-            Rigidbody rb = RocketInstance.GetComponent<Rigidbody>();
+            var rb = RocketInstance.GetComponent<Rigidbody>();
             rb.AddRelativeForce(new Vector3(0, 1000, 0), ForceMode.Force);
 
             yield return new WaitForSeconds(0.5f);
@@ -39,12 +39,12 @@ namespace NewtonVR_Rhino
             RocketInstance.GetComponent<Rigidbody>().isKinematic = true;
             RocketInstance.GetComponent<NVRInteractableItem>().CanAttach = false;
 
-            Vector3 startScale = Vector3.one * 0.1f;
-            Vector3 endScale = Vector3.one;
+            var startScale = Vector3.one * 0.1f;
+            var endScale = Vector3.one;
 
-            float startTime = Time.time;
-            float overTime = 0.5f;
-            float stopTime = startTime + overTime;
+            var startTime = Time.time;
+            var overTime = 0.5f;
+            var stopTime = startTime + overTime;
 
             while (Time.time < stopTime)
             {

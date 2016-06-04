@@ -48,7 +48,7 @@ namespace NewtonVR_Rhino
 
             if (IsAttached == true)
             {
-                Vector3 PositionDelta = (AttachedHand.transform.position - InitialAttachPoint.position) * DeltaMagic;
+                var PositionDelta = (AttachedHand.transform.position - InitialAttachPoint.position) * DeltaMagic;
 
                 this.Rigidbody.AddForceAtPosition(PositionDelta, InitialAttachPoint.position, ForceMode.VelocityChange);
             }
@@ -117,7 +117,7 @@ namespace NewtonVR_Rhino
 
         private float GetValue()
         {
-            float m_diff = 0.0f;
+            var m_diff = 0.0f;
             if (HingeJoint.useLimits)
             {
                 m_diff = HingeJoint.angle - HingeJoint.limits.min;

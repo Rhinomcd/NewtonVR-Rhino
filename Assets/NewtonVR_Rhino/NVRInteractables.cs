@@ -24,7 +24,7 @@ namespace NewtonVR_Rhino
         {
             NVRInteractableMapping.Add(interactable, colliders);
 
-            for (int index = 0; index < colliders.Length; index++)
+            for (var index = 0; index < colliders.Length; index++)
             {
                 ColliderMapping.Add(colliders[index], interactable);
             }

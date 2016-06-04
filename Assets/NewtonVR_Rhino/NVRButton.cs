@@ -51,7 +51,7 @@ namespace NewtonVR_Rhino
 
             if (CurrentDistance > MinDistance)
             {
-                Vector3 PositionDelta = InitialPosition.position - this.transform.position;
+                var PositionDelta = InitialPosition.position - this.transform.position;
                 this.Rigidbody.velocity = PositionDelta * PositionMagic * Time.fixedDeltaTime;
             }
         }

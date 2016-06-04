@@ -37,7 +37,7 @@ namespace NewtonVR_Rhino
 
         private NVRInteractableItem FindNVRItem(GameObject gameobject)
         {
-            NVRInteractableItem item = gameobject.GetComponent<NVRInteractableItem>();
+            var item = gameobject.GetComponent<NVRInteractableItem>();
 
             if (item != null)
                 return item;
@@ -50,7 +50,7 @@ namespace NewtonVR_Rhino
 
         public virtual void Attached(NVRAttachJoint joint)
         {
-            Vector3 TargetPosition = joint.transform.position + (Item.transform.position - this.transform.position);
+            var TargetPosition = joint.transform.position + (Item.transform.position - this.transform.position);
             Rigidbody.MovePosition(TargetPosition);
 
             Rigidbody.velocity = Vector3.zero;
@@ -67,7 +67,7 @@ namespace NewtonVR_Rhino
 
         public virtual void PullTowards(Vector3 jointPosition)
         {
-            Vector3 delta = jointPosition - this.transform.position;
+            var delta = jointPosition - this.transform.position;
             Rigidbody.AddForceAtPosition(delta * PositionMagic, this.transform.position, ForceMode.VelocityChange);
         }
     }

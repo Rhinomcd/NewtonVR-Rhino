@@ -13,7 +13,7 @@ public class NVRExampleSpawner : MonoBehaviour
     {
         if (Button.ButtonDown)
         {
-            GameObject newGo = GameObject.Instantiate(ToCopy);
+            var newGo = GameObject.Instantiate(ToCopy);
             newGo.transform.position = SpawnLocation.position;
             newGo.transform.localScale = ToCopy.transform.lossyScale;
         }
