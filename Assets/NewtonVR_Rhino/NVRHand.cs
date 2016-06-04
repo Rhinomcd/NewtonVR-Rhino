@@ -152,12 +152,16 @@ namespace NewtonVR_Rhino {
                     //TODO: Impletent Toggle Behavior
                     break;
                 case InterationStyle.GripDownToInteract:
-                    if (HoldButtonDown) {
-                        if (ObjectCurrentlyInteracting == null) {
+                    if (HoldButtonDown)
+                    {
+                        if (ObjectCurrentlyInteracting == null)
+                        {
                             PickupClosest();
-                        } else if (HoldButtonUp && ObjectCurrentlyInteracting != null) {
-                            EndInteraction(null);
                         }
+                    }
+                    else if (HoldButtonUp && ObjectCurrentlyInteracting != null)
+                    {
+                        EndInteraction(null);
                     }
                     break;
             }
