@@ -104,10 +104,10 @@ namespace NewtonVR_Rhino {
         protected virtual void Update() {
             UpdateButtons();
             Interact();
+            //TODO: Implement Visibility Changes
             if (NVRPlayer.Instance.PhysicalHands) {
                 UpdateHandState();
             }
-
         }
 
         private void UpdateButtons() {
@@ -139,28 +139,19 @@ namespace NewtonVR_Rhino {
         private void Interact() {
             switch (CurrentInteractionStyle) {
                 case InterationStyle.UseDownToInteract:
-                    if (UseButtonDown) {
-                        if (ObjectCurrentlyInteracting == null) {
-                            PickupClosest();
-                        }
+                    if (UseButtonDown && ObjectCurrentlyInteracting == null) {
+                        PickupClosest();
                     } else if (UseButtonUp && ObjectCurrentlyInteracting != null) {
                         EndInteraction(null);
                     }
-
                     break;
                 case InterationStyle.GripToggleToInteract:
                     //TODO: Impletent Toggle Behavior
                     break;
                 case InterationStyle.GripDownToInteract:
-                    if (HoldButtonDown)
-                    {
-                        if (ObjectCurrentlyInteracting == null)
-                        {
-                            PickupClosest();
-                        }
-                    }
-                    else if (HoldButtonUp && ObjectCurrentlyInteracting != null)
-                    {
+                    if (HoldButtonDown && ObjectCurrentlyInteracting == null) {
+                        PickupClosest();
+                    } else if (HoldButtonUp && ObjectCurrentlyInteracting != null) {
                         EndInteraction(null);
                     }
                     break;
