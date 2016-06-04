@@ -52,8 +52,8 @@ namespace NewtonVR_Rhino.Example
 
                     if (Hand.Inputs[Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger].PressDown == true)
                     {
-                        var LHandInteractable = NVRPlayer.Instance.LeftHand.CurrentlyInteracting;
-                        var RHandInteractable = NVRPlayer.Instance.RightHand.CurrentlyInteracting;
+                        var LHandInteractable = NVRPlayer.Instance.LeftHand.ObjectCurrentlyInteracting;
+                        var RHandInteractable = NVRPlayer.Instance.RightHand.ObjectCurrentlyInteracting;
 
 
                         var offset = NVRPlayer.Instance.Head.transform.position - NVRPlayer.Instance.transform.position;
