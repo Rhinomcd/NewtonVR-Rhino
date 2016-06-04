@@ -146,7 +146,13 @@ namespace NewtonVR_Rhino {
                     }
                     break;
                 case InterationStyle.GripToggleToInteract:
-                    //TODO: Impletent Toggle Behavior
+                    if (HoldButtonDown && CurrentHandState == HandState.GripToggleOnInteracting)
+                    {
+                        EndInteraction(null);
+                    } else if (HoldButtonDown && CurrentHandState == HandState.GripToggleOnNotInteracting)
+                    {
+                        PickupClosest();
+                    }
                     break;
                 case InterationStyle.GripDownToInteract:
                     if (HoldButtonDown && ObjectCurrentlyInteracting == null) {
@@ -160,7 +166,7 @@ namespace NewtonVR_Rhino {
         private void UpdateHandState() {
             switch (CurrentInteractionStyle) {
                 case InterationStyle.GripDownToInteract:
-                    if (HoldButtonPressed && IsInteracting) {
+                    if (HoldButtonPressed && !IsInteracting) {
                         CurrentHandState = HandState.GripDownNotInteracting;
                     } else if (HoldButtonDown && IsInteracting) {
                         CurrentHandState = HandState.GripDownInteracting;
@@ -170,7 +176,14 @@ namespace NewtonVR_Rhino {
                     break;
 
                 case InterationStyle.GripToggleToInteract:
-                //TODO: Add Grip Toggle Style
+                    if (HoldButtonPressed && !IsInteracting)
+                    {
+                        CurrentHandState = HandState.GripToggleOnNotInteracting;
+                    } else if (HoldButtonDown && IsInteracting)
+                    {
+                        CurrentHandState = HandState.GripToggleOnInteracting;
+                    }
+                    break;
 
                 case InterationStyle.UseDownToInteract:
                     if (UseButtonPressed && !IsInteracting) {
@@ -266,7 +279,7 @@ namespace NewtonVR_Rhino {
             if (EstimationSampleIndex >= LastPositions.Length)
                 EstimationSampleIndex = 0;
 
-            if (Controller != null && IsInteracting == false && IsHovering == true) {
+            if (Controller != null && !IsInteracting && IsHovering) {
                 Controller.TriggerHapticPulse(100);
             }
         }
