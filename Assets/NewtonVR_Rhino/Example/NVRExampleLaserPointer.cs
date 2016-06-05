@@ -7,7 +7,7 @@ namespace NewtonVR_Rhino.Example
     {
         public Color LineColor;
         public float LineWidth = 0.02f;
-        public bool ForceLineVisible = true;
+        public bool ForceLineVisible = false;
 
         public bool OnlyVisibleOnTrigger = true;
 
@@ -37,9 +37,15 @@ namespace NewtonVR_Rhino.Example
 
         private void LateUpdate()
         {
-            Line.enabled = ForceLineVisible || (OnlyVisibleOnTrigger && Hand != null && Hand.Inputs[Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger].IsPressed);
-
-            if (Line.enabled == true)
+            Line.enabled = OnlyVisibleOnTrigger && Hand != null && Hand.Inputs[Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger].IsPressed;
+            Debug.Log(Line.enabled);
+            Debug.Log("Hand: " + Hand);
+            if (Hand != null)
+            {
+                Debug.Log("Button Pressed:" + Hand.Inputs[Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger].IsPressed);
+            
+            }
+            if (Line.enabled)
             {
                 Line.material.SetColor("_Color", LineColor);
                 Line.SetColors(LineColor, LineColor);
